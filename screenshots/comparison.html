@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="widdiv=device-widdiv, initial-scale=1.0" />
+    <title>Comparison</title>
+    <style>
+      html {
+        box-sizing: border-box;
+        font-size: 18px;
+      }
+
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      style="
+        width: 100vw;
+        display: grid;
+        gap: 8px;
+        grid-template-columns: auto 1fr 1fr;
+      "
+    >
+      <div>Size</div>
+      <div><pre>main</pre></div>
+      <div><pre>branch</pre></div>
+
+      <div>1920x1080</div>
+      <div><img src="main/1920x1080.png" alt="main, 1920x1080" /></div>
+      <div><img src="./branch/1920x1080.png" alt="branch, 1920x1080" /></div>
+
+      <div>667x375</div>
+      <div><img src="main/667x375.png" alt="main, 667x375" /></div>
+      <div><img src="./branch/667x375.png" alt="branch, 667x375" /></div>
+
+      <div>375x812</div>
+      <div><img src="main/375x812.png" alt="main, 375x812" /></div>
+      <div><img src="./branch/375x812.png" alt="branch, 375x812" /></div>
+    </div>
+  </body>
+</html>
