@@ -10,10 +10,12 @@ set -ex
 mkdir -p $1
 
 # Desktop
-puppeteer screenshot --full-page --sandbox false index.html --viewport 1920x1080 $1/1920x1080.png
+puppeteer screenshot --full-page --sandbox false index.html --viewport 1920x1080 $1/1920x1080.png &
 
 # iPhone SE 2nd Gen, horizontal
-puppeteer screenshot --full-page --sandbox false index.html --viewport 667x375 $1/667x375.png
+puppeteer screenshot --full-page --sandbox false index.html --viewport 667x375 $1/667x375.png &
 
 # iPhone 11 Pro
-puppeteer screenshot --full-page --sandbox false index.html --viewport 375x812 $1/375x812.png
+puppeteer screenshot --full-page --sandbox false index.html --viewport 375x812 $1/375x812.png &
+
+wait
