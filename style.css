@@ -12,7 +12,6 @@ html {
 
 body,
 h1,
-h2,
 p,
 ul {
   margin: 0;
@@ -42,10 +41,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
 }
 
-.main-content {
+main {
   max-width: 960px;
   width: 100%;
   background: white;
@@ -64,22 +62,10 @@ h1 {
   letter-spacing: -0.5px;
 }
 
-h2 {
-  font-size: 1.3rem;
-  color: #2d3748;
-  font-weight: 500;
-  margin-bottom: 16px;
-}
-
 p {
   font-size: 1.1rem;
   color: #4a5568;
   margin-bottom: 16px;
-}
-
-ul {
-  padding-left: 24px;
-  list-style: disc;
 }
 
 .hero-image {
@@ -120,12 +106,9 @@ a.button {
   padding: 16px 32px;
   font-size: 1.1rem;
   font-weight: 500;
-  text-align: center;
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
   transition: all 0.3s ease;
-  border: none;
-  cursor: pointer;
 }
 
 a.button:hover {
@@ -133,7 +116,7 @@ a.button:hover {
   box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
 }
 
-.footer {
+footer {
   max-width: 960px;
   width: 100%;
   text-align: center;
@@ -144,20 +127,20 @@ a.button:hover {
   margin-top: auto;
 }
 
-.footer p {
+footer p {
   color: #718096;
   font-size: 0.95rem;
   margin-bottom: 0;
 }
 
-.footer a {
+footer a {
   color: #4299e1;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
 }
 
-.footer a:hover {
+footer a:hover {
   color: #2b6cb0;
   text-decoration: underline;
 }
@@ -173,12 +156,12 @@ a.button:hover {
     padding: 12px;
   }
 
-  .main-content {
+  main {
     padding: 24px 20px;
     border-radius: 12px;
   }
 
-  .footer {
+  footer {
     padding: 20px 16px;
     border-radius: 12px;
   }
@@ -217,11 +200,11 @@ a.button:hover {
     padding: 8px;
   }
 
-  .main-content {
+  main {
     padding: 20px 16px;
   }
 
-  .footer {
+  footer {
     padding: 16px 12px;
   }
 
@@ -239,7 +222,7 @@ a.button:hover {
     font-size: 0.95rem;
   }
 
-  .footer p {
+  footer p {
     font-size: 0.9rem;
   }
 }
