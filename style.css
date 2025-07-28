@@ -1,7 +1,7 @@
 /* Reset */
 html {
   box-sizing: border-box;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 *,
@@ -25,52 +25,51 @@ img {
 }
 
 /* Style */
-.col {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+@property --rhythm {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 48px;
 }
 
 body {
-  color: #2c3e50;
+  color: #4a5568;
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+
   font-family: "Georgia", "Times New Roman", serif;
   line-height: 1.7;
-  padding: 24px;
+  padding: calc(var(--rhythm) / 2);
   min-height: 100vh;
+  gap: calc(var(--rhythm) / 2);
+
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-main {
+main,
+footer {
   max-width: 960px;
   width: 100%;
   background: white;
-  border-radius: 16px;
+  border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  padding: 48px;
-  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  padding: var(--rhythm) var(--rhythm) calc(var(--rhythm) * 1.5);
+  gap: calc(var(--rhythm) * 1.5);
 }
 
 h1 {
   text-align: center;
   font-weight: 600;
-  font-size: 2.5rem;
   color: #1a365d;
-  margin-bottom: 24px;
   letter-spacing: -0.5px;
-}
+  line-height: 1.2;
 
-p {
-  font-size: 1.1rem;
-  color: #4a5568;
-  margin-bottom: 16px;
-}
-
-.hero-image {
-  margin: 32px 0;
-  text-align: center;
+  font-size: 2.3rem;
 }
 
 .hero-image img {
@@ -87,15 +86,16 @@ p {
 }
 
 .description {
-  background: #f7fafc;
-  padding: 32px;
+  background: #f4f8fb;
+  padding: calc(var(--rhythm) * 2 / 3);
   border-radius: 12px;
-  margin: 32px 0;
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
 }
 
 .actions {
   text-align: center;
-  margin: 32px 0;
 }
 
 a.button {
@@ -104,7 +104,6 @@ a.button {
   color: white;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 16px 32px;
-  font-size: 1.1rem;
   font-weight: 500;
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
@@ -117,26 +116,19 @@ a.button:hover {
 }
 
 footer {
-  max-width: 960px;
-  width: 100%;
   text-align: center;
-  padding: 24px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   margin-top: auto;
+
+  padding: calc(var(--rhythm) / 2);
 }
 
 footer p {
-  color: #718096;
-  font-size: 0.95rem;
-  margin-bottom: 0;
+  font-size: 0.9rem;
 }
 
 footer a {
   color: #4299e1;
   text-decoration: none;
-  font-weight: 500;
   transition: color 0.3s ease;
 }
 
@@ -148,81 +140,34 @@ footer a:hover {
 .github-icon {
   display: inline-block;
   margin-right: 8px;
-  font-size: 1.1rem;
+  font-size: 1.1em;
 }
 
 @media (max-width: 768px) {
   body {
-    padding: 12px;
-  }
-
-  main {
-    padding: 24px 20px;
-    border-radius: 12px;
-  }
-
-  footer {
-    padding: 20px 16px;
-    border-radius: 12px;
+    --rhythm: 20px;
+    font-size: 18px;
   }
 
   h1 {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-  }
-
-  p {
-    font-size: 1rem;
-    line-height: 1.6;
+    font-size: 1.6rem;
   }
 
   .description {
-    padding: 24px 20px;
-    margin: 24px 0;
-  }
-
-  .hero-image {
-    margin: 24px 0;
-  }
-
-  .actions {
-    margin: 24px 0;
+    padding: var(--rhythm);
   }
 
   a.button {
-    padding: 14px 24px;
-    font-size: 1rem;
+    padding: calc(var(--rhythm) * 0.75) calc(var(--rhythm) * 1.2);
+  }
+
+  footer {
+    padding: var(--rhythm) calc(var(--rhythm) * 8 / 10);
   }
 }
 
 @media (max-width: 480px) {
   body {
-    padding: 8px;
-  }
-
-  main {
-    padding: 20px 16px;
-  }
-
-  footer {
-    padding: 16px 12px;
-  }
-
-  h1 {
-    font-size: 1.6rem;
-    line-height: 1.2;
-  }
-
-  .description {
-    padding: 20px 16px;
-  }
-
-  a.button {
-    padding: 12px 20px;
-    font-size: 0.95rem;
-  }
-
-  footer p {
-    font-size: 0.9rem;
+    --rhythm: 16px;
   }
 }
