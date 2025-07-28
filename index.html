@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LessWrong Community Weekend</title>
+    <title>LessWrong Community Weekend 2025 - Berlin</title>
     <style>
       /* Reset */
       html {
         box-sizing: border-box;
-        font-size: 16px;
+        font-size: 18px;
       }
 
       *,
@@ -19,6 +19,7 @@
 
       body,
       h1,
+      h2,
       p,
       ul {
         margin: 0;
@@ -35,87 +36,271 @@
       .col {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 16px;
       }
 
       body {
-        color: #212121;
-
-        font-family: Arial, Helvetica, sans-serif;
-
-        padding: 8px;
-
+        color: #2c3e50;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        font-family: "Georgia", "Times New Roman", serif;
+        line-height: 1.7;
+        padding: 24px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
         align-items: center;
-        justify-content: center;
-        height: 100dvh;
+        justify-content: flex-start;
       }
 
-      body > * {
-        max-width: 800px;
+      .main-content {
+        max-width: 960px;
+        width: 100%;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 48px;
+        margin-bottom: 32px;
       }
 
       h1 {
         text-align: center;
+        font-weight: 600;
+        font-size: 2.5rem;
+        color: #1a365d;
+        margin-bottom: 24px;
+        letter-spacing: -0.5px;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+        color: #2d3748;
         font-weight: 500;
+        margin-bottom: 16px;
+      }
+
+      p {
+        font-size: 1.1rem;
+        color: #4a5568;
+        margin-bottom: 16px;
       }
 
       ul {
-        padding-left: 16px;
+        padding-left: 24px;
         list-style: disc;
       }
 
-      img {
-        border-radius: 8px;
-        box-shadow: 2px 2px 8px gray;
+      .hero-image {
+        margin: 32px 0;
+        text-align: center;
+      }
+
+      .hero-image img {
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .hero-image img:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+      }
+
+      .description {
+        background: #f7fafc;
+        padding: 32px;
+        border-radius: 12px;
+        margin: 32px 0;
+      }
+
+      .actions {
+        text-align: center;
+        margin: 32px 0;
       }
 
       a.button {
+        display: inline-block;
         text-decoration: none;
         color: white;
-        background-color: #5f9b65;
-        padding: 8px;
-        font-variant-caps: small-caps;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 16px 32px;
+        font-size: 1.1rem;
+        font-weight: 500;
         text-align: center;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+      }
 
-        border-radius: 8px;
-        box-shadow: 2px 2px 8px gray;
+      a.button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+      }
+
+      .footer {
+        max-width: 960px;
+        width: 100%;
+        text-align: center;
+        padding: 24px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        margin-top: auto;
+      }
+
+      .footer p {
+        color: #718096;
+        font-size: 0.95rem;
+        margin-bottom: 12px;
+      }
+
+      .footer a {
+        color: #4299e1;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+      }
+
+      .footer a:hover {
+        color: #2b6cb0;
+        text-decoration: underline;
+      }
+
+      .github-icon {
+        display: inline-block;
+        margin-right: 8px;
+        font-size: 1.1rem;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 12px;
+        }
+        
+        .main-content {
+          padding: 24px 20px;
+          border-radius: 12px;
+        }
+        
+        .footer {
+          padding: 20px 16px;
+          border-radius: 12px;
+        }
+        
+        h1 {
+          font-size: 1.8rem;
+          margin-bottom: 20px;
+        }
+        
+        p {
+          font-size: 1rem;
+          line-height: 1.6;
+        }
+        
+        .description {
+          padding: 24px 20px;
+          margin: 24px 0;
+        }
+        
+        .hero-image {
+          margin: 24px 0;
+        }
+        
+        .actions {
+          margin: 24px 0;
+        }
+        
+        a.button {
+          padding: 14px 24px;
+          font-size: 1rem;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        body {
+          padding: 8px;
+        }
+        
+        .main-content {
+          padding: 20px 16px;
+        }
+        
+        .footer {
+          padding: 16px 12px;
+        }
+        
+        h1 {
+          font-size: 1.6rem;
+          line-height: 1.2;
+        }
+        
+        .description {
+          padding: 20px 16px;
+        }
+        
+        a.button {
+          padding: 12px 20px;
+          font-size: 0.95rem;
+        }
+        
+        .footer p {
+          font-size: 0.9rem;
+        }
       }
     </style>
   </head>
-  <body class="col" style="gap: 32px">
-    <h1>LessWrong Community Weekend 2025</h1>
-    <a
-      href="https://images.trvl-media.com/lodging/18000000/17810000/17804800/17804719/19212e43.jpg?impolicy=resizecrop&rw=1200&ra=fit"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <img
-        src="https://images.trvl-media.com/lodging/18000000/17810000/17804800/17804719/19212e43.jpg?impolicy=resizecrop&rw=1200&ra=fit"
-        alt="A picture of the hostel that hosts the LWCW"
-    /></a>
-    <div class="col">
-      <p>
-        Join the 12th Less Wrong Community Weekend (LWCW) in Berlin. This is
-        one of the world’s largest rationalist social gathering which brings
-        together 250+ aspiring rationalists from across Europe and beyond for 4
-        days of intellectual exploration, socialising and fun.
-      </p>
-      <p>
-        We will be taking over the whole hostel with a huge variety of spaces
-        inside and outside to talk, relax, dance, play, learn, teach, connect,
-        cuddle, practice, share ... - simply enjoy life together our way.
-      </p>
+  <body>
+    <div class="main-content col">
+      <h1>LessWrong Community Weekend 2025</h1>
+      
+      <div class="hero-image">
+        <a
+          href="https://images.trvl-media.com/lodging/18000000/17810000/17804800/17804719/19212e43.jpg?impolicy=resizecrop&rw=1200&ra=fit"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            src="https://images.trvl-media.com/lodging/18000000/17810000/17804800/17804719/19212e43.jpg?impolicy=resizecrop&rw=1200&ra=fit"
+            alt="A picture of the hostel that hosts the LWCW"
+        /></a>
+      </div>
+      
+      <div class="description col">
+        <p>
+          Join us for the 12th LessWrong Community Weekend (LWCW) in Berlin! 
+          This is one of the world's largest rationalist gatherings, bringing together 
+          250+ curious minds from across the globe for four days of 
+          deep conversations, learning, and genuine connection.
+        </p>
+        <p>
+          We're taking over an entire hostel with diverse spaces—both indoor and 
+          outdoor—perfect for talking, relaxing, dancing, playing games, learning 
+          new things, teaching others, connecting with like-minded people, and 
+          simply enjoying life together in our own unique way.
+        </p>
+      </div>
+      
+      <div class="actions">
+        <!-- <a href="https://herewillbesomething.lwcw.org" class="button">
+          📆 Go to the schedule testing website
+        </a> -->
+        <a
+          href="https://www.lesswrong.com/events/JxsdDs8ZfbF4dBkGe/lesswrong-community-weekend-2025"
+          class="button"
+        >
+          📣 Go to the official announcement
+        </a>
+      </div>
     </div>
-    <div class="col">
-      <!-- <a href="https://herewillbesomething.lwcw.org" class="button">
-        📆 Go to the schedule testing website
-      </a> -->
-      <a
-        href="https://www.lesswrong.com/events/JxsdDs8ZfbF4dBkGe/lesswrong-community-weekend-2025"
-        class="button"
-      >
-        📣 Go to the official announcement
-      </a>
-    </div>
+
+    <footer class="footer">
+      <p>
+        <span class="github-icon">🔧</span>
+        <a href="https://github.com/LWCW-Europe/lwcw.org" target="_blank" rel="noopener noreferrer">
+          Improve this site on GitHub →
+        </a>
+      </p>
+    </footer>
   </body>
 </html>
