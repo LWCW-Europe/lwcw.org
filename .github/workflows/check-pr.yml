@@ -1,0 +1,19 @@
+name: Check pull requests
+
+on:
+  pull_request:
+
+jobs:
+  check-with-prettier:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Check the code with Prettier
+        uses: creyD/prettier_action@v4.6
+        with:
+          dry: true
+          no_commit: true
+          prettier_options: "--check index.html style.css"
