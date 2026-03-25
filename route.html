@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GPX Tracker</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      }
+
+      #map {
+        width: 100vw;
+        height: 100vh;
+      }
+
+      #download-btn {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        padding: 12px 24px;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        transition:
+          background 0.2s,
+          transform 0.1s;
+        z-index: 1000;
+        display: none;
+      }
+
+      #download-btn:hover {
+        background: #1d4ed8;
+      }
+
+      #download-btn:active {
+        transform: scale(0.98);
+      }
+
+      #download-btn.visible {
+        display: block;
+      }
+
+      #error-message {
+        position: fixed;
+        top: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #dc2626;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 14px;
+        z-index: 1000;
+        display: none;
+      }
+
+      #error-message.visible {
+        display: block;
+      }
+
+      .leaflet-control-attribution {
+        font-size: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <a id="gpx-source" href="" style="display: none"></a>
+    <div id="map"></div>
+    <button id="download-btn">Download GPX</button>
+    <div id="error-message"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+      const gpxSource = document.getElementById("gpx-source");
+      const downloadBtn = document.getElementById("download-btn");
+      const errorMessage = document.getElementById("error-message");
+
+      function showError(message) {
+        errorMessage.textContent = message;
+        errorMessage.classList.add("visible");
+        setTimeout(() => errorMessage.classList.remove("visible"), 5000);
+      }
+
+      function getGpxUrl() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get("gpx");
+      }
+
+      function parseGpx(xmlText) {
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(xmlText, "application/xml");
+
+        const ns = { gpx: "http://www.topografix.com/GPX/1/1" };
+        const trkpts = xml.querySelectorAll("trkpt");
+
+        if (trkpts.length === 0) {
+          const wpts = xml.querySelectorAll("wpt");
+          if (wpts.length > 0) {
+            return Array.from(wpts).map((wpt) => ({
+              lat: parseFloat(wpt.getAttribute("lat")),
+              lon: parseFloat(wpt.getAttribute("lon")),
+            }));
+          }
+          return null;
+        }
+
+        return Array.from(trkpts).map((pt) => ({
+          lat: parseFloat(pt.getAttribute("lat")),
+          lon: parseFloat(pt.getAttribute("lon")),
+        }));
+      }
+
+      let map, gpxLayer, gpxUrl, userMarker;
+      const userLatLngs = [];
+
+      async function loadGpx() {
+        gpxUrl = getGpxUrl();
+        if (!gpxUrl) {
+          showError("No GPX URL provided. Add ?gpx=<url> to the URL.");
+          return;
+        }
+
+        try {
+          //const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(gpxUrl)}`;
+          const response = await fetch(gpxUrl);
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+          const gpxText = await response.text();
+          const coords = parseGpx(gpxText);
+
+          if (!coords || coords.length === 0) {
+            showError("No track points found in GPX file.");
+            return;
+          }
+
+          gpxLayer = L.polyline(
+            coords.map((c) => [c.lat, c.lon]),
+            {
+              color: "#ef4444",
+              weight: 4,
+              opacity: 0.8,
+            }
+          ).addTo(map);
+
+          map.fitBounds(gpxLayer.getBounds(), { padding: [30, 30] });
+
+          gpxSource.href = gpxUrl;
+          downloadBtn.classList.add("visible");
+        } catch (err) {
+          showError(`Failed to load GPX: ${err.message}`);
+        }
+      }
+
+      function startGeolocation() {
+        if (!navigator.geolocation) return;
+
+        const blueIcon = L.divIcon({
+          html: `<div style="width: 16px; height: 16px; background: #3b82f6; border: 3px solid white; border-radius: 50%; box-shadow: 0 2px 6px rgba(0,0,0,0.3);"></div>`,
+          iconSize: [16, 16],
+          iconAnchor: [8, 8],
+          className: "user-marker",
+        });
+
+        navigator.geolocation.watchPosition(
+          (pos) => {
+            const latlng = [pos.coords.latitude, pos.coords.longitude];
+
+            if (userMarker) {
+              userMarker.setLatLng(latlng);
+            } else {
+              userMarker = L.marker(latlng, { icon: blueIcon }).addTo(map);
+            }
+          },
+          (err) => console.warn("Geolocation error:", err.message),
+          { enableHighAccuracy: true }
+        );
+      }
+
+      downloadBtn.addEventListener("click", () => {
+        if (gpxSource.href) {
+          const a = document.createElement("a");
+          a.href = gpxSource.href;
+          const filename = gpxSource.href.split("/").pop() || "track.gpx";
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }
+      });
+
+      map = L.map("map").setView([0, 0], 2);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "© OpenStreetMap contributors",
+      }).addTo(map);
+
+      startGeolocation();
+      loadGpx();
+    </script>
+  </body>
+</html>
