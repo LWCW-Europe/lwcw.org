@@ -57,6 +57,35 @@
         display: block;
       }
 
+      #center-btn {
+        --size: calc(min(48px, max(32px, min(10vw, 10vh))));
+        position: fixed;
+        bottom: calc(var(--size) * 0.5);
+        left: calc(var(--size) * 0.5);
+        width: var(--size);
+        height: var(--size);
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        transition: background 0.2s;
+        z-index: 1000;
+        display: none;
+        font-size: calc(var(--size));
+        vertical-align: middle;
+        line-height: 1;
+      }
+
+      #center-btn:hover {
+        background: #1d4ed8;
+      }
+
+      #center-btn.visible {
+        display: block;
+      }
+
       #error-message {
         position: fixed;
         top: 24px;
@@ -83,6 +112,7 @@
   <body>
     <a id="gpx-source" href="" style="display: none"></a>
     <div id="map"></div>
+    <button id="center-btn" title="Center on my location">⌖</button>
     <button id="download-btn">Download GPX</button>
     <div id="error-message"></div>
 
@@ -90,6 +120,7 @@
     <script>
       const gpxSource = document.getElementById("gpx-source");
       const downloadBtn = document.getElementById("download-btn");
+      const centerBtn = document.getElementById("center-btn");
       const errorMessage = document.getElementById("error-message");
 
       function showError(message) {
@@ -127,7 +158,7 @@
         }));
       }
 
-      let map, gpxLayer, gpxUrl, userMarker;
+      let map, gpxLayer, gpxUrl, userMarker, userPos;
       const userLatLngs = [];
 
       async function loadGpx() {
@@ -180,12 +211,13 @@
 
         navigator.geolocation.watchPosition(
           (pos) => {
-            const latlng = [pos.coords.latitude, pos.coords.longitude];
+            userPos = [pos.coords.latitude, pos.coords.longitude];
 
             if (userMarker) {
-              userMarker.setLatLng(latlng);
+              userMarker.setLatLng(userPos);
             } else {
-              userMarker = L.marker(latlng, { icon: blueIcon }).addTo(map);
+              userMarker = L.marker(userPos, { icon: blueIcon }).addTo(map);
+              centerBtn.classList.add("visible");
             }
           },
           (err) => console.warn("Geolocation error:", err.message),
@@ -202,6 +234,12 @@
           document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);
+        }
+      });
+
+      centerBtn.addEventListener("click", () => {
+        if (userPos) {
+          map.setView(userPos, 15);
         }
       });
 
